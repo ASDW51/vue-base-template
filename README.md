@@ -1,4 +1,4 @@
-# cli-template
+# vue-base-template
 
 ## Project setup
 ```
