@@ -1,5 +1,15 @@
 <template>
     <div>
-        test
+        {{msg}}
     </div>
 </template>
+<script>
+export default {
+    props:["msg"],
+    data(){
+        return {
+
+        }
+    }
+}
+</script>

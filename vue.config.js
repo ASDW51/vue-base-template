@@ -8,7 +8,7 @@ function resolve(dir){
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave:false,
-  publicPath:process.env.NODE_ENV=='development'?'/':'./',
+  publicPath:process.env.NODE_ENV=='production'?'./':'/',
   configureWebpack:{
     resolve:{
       alias:{
@@ -20,6 +20,7 @@ module.exports = defineConfig({
     }
   },
   devServer:{
+    host:"0.0.0.0",
     proxy:{
       '/':{
         target:process.env.VUE_APP_REQUEST_URL,

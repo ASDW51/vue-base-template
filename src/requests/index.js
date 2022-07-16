@@ -1,7 +1,7 @@
 import axios from "axios"
 import store from "../store/index"
 const instance = axios.create({
-    baseURL:process.env.NODE_ENV=='development'?'/':process.env.VUE_APP_REQUEST_URL,
+    baseURL:process.env.NODE_ENV=='production'?process.env.VUE_APP_REQUEST_URL:'/',
     timeout:5000,
     headers:{
         "Content-Type":"application/json"
