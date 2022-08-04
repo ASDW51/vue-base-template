@@ -5,11 +5,11 @@
 </template>
 <script>
 export default {
-    props:["msg"],
-    data(){
-        return {
+	props:["msg"],
+	data(){
+		return {
 
-        }
-    }
+		}
+	}
 }
 </script>

@@ -6,22 +6,24 @@
 </template>
 
 <script>
-import getIndex from "@/apis/index"
+import {debounce} from "@/util/index"
 import {throttle} from "@/util/index"
+debounce
 import "@/apis/index"
 export default {
-  name: "Index",
-  methods:{
-   request(){
-    this.$request.index.getIndex().then(res=>{
-      console.log(res)
-    })
-    this.$request.swipe.getSwipe().then(res=>{
-      console.log(res)
-    })
-   }
-  }
-};
+	name: "Index",
+	methods:{
+	@throttle
+		request(){
+			this.$request.index.getIndex().then(res=>{
+				console.log(res)
+			})
+			this.$request.swipe.getSwipe().then(res=>{
+				console.log(res)
+			})
+		}
+	}
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
