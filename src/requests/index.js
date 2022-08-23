@@ -36,4 +36,27 @@ instance.interceptors.response.use(response=>{
 
 })
 
+const get = (url,data,config={})=>{
+	return instance.get(url,{
+		params:data,
+		...config
+	})
+}
+const post = (url,data,config)=>{
+	return instance.post(url,data,config)
+}
+const put = (url,data,config)=>{
+	return instance.put(url,data,config)
+}
+const del = (url,config)=>{
+	return instance.delete(url,config)
+}
 export default instance
+
+export {
+	instance,
+	get,
+	del,
+	post,
+	put
+}
