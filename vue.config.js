@@ -22,15 +22,15 @@ module.exports = defineConfig({
 	},
 	devServer:{
 		host:"0.0.0.0",
-		proxy:{
-			"/":{
-				target:process.env.VUE_APP_REQUEST_URL,
-				changeOrigin:true,
-				ws:false,
-				pathRewrite:{
-					"^/":""
-				}
-			}
-		}
+		// proxy:{
+		// 	"/":{
+		// 		target:process.env.VUE_APP_REQUEST_URL,
+		// 		changeOrigin:true,
+		// 		ws:false,
+		// 		pathRewrite:{
+		// 			"^/":""
+		// 		}
+		// 	}
+		// }
 	}
 })
