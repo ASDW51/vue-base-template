@@ -1,6 +1,7 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import router from "@/router/index"
+import role from "./role/index"
 import {menu} from "@/apis/user/index"
 import {dynamicRouter} from "@/util/index"
 Vue.use(Vuex)
@@ -111,5 +112,7 @@ export default new Vuex.Store({
 			})
 		}
 	},
-	modules: {},
+	modules: {
+		roleMod:role
+	},
 })

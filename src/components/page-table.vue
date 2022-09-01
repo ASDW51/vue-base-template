@@ -19,6 +19,7 @@
             <el-table 
                 border 
                 :data="tableData"
+				:height="tableHeight"
                 header-row-class-name="cust-head"
                 header-cell-class-name="cust-head-cell"
                 >
@@ -32,8 +33,9 @@
                     >
                     <template slot-scope="scope">
                             <div v-if="item.slot=='opration'">
+								<slot name="moreOpration" :data="scope"></slot>
                                 <el-button type="primary" size="small" @click="edit(scope.row)">编辑</el-button>
-                                <el-button type="danger" size="small">删除</el-button>
+                                <el-button type="danger" size="small" @click="delUser(scope.row)">删除</el-button>
                         </div>
                         <slot :name="item.slot" v-else-if="item.slot" v-bind:data="scope"></slot>
                         <div v-else>
@@ -44,8 +46,23 @@
                 </el-table-column>
             </el-table>
         </div>
+		<div style="text-align:right;margin-top:10px;">
+			<el-pagination
+				background
+				layout="total,sizes,prev,pager,next"
+				:page-size="pageSize"
+				:page-sizes="[10,20,50,100]"
+				:total="pageTotal"
+				:current-page="pageNum"
+				@next-click="page(1)"
+				@prev-click="page(-1)"
+				@current-change="pageChange"
+				@size-change="sizeChange"
+				></el-pagination>
+		</div>
         <div>
-            <el-dialog v-model="show" :visible.sync="show">
+            <el-dialog :title="mode=='add'?'新增':'修改'" v-model="show" :visible.sync="show">
+
                 <json-form
                     :direction="updateField.direction"
                     :form="updateField.form"
@@ -90,16 +107,42 @@ export default {
 			opration:{},
 			tableData:[],
 			show:false,
-			updateField:{}
+			updateField:{},
+			pageTotal:1,
+			pageSize:10,
+			pageNum:1,
+			tableHeight:350,
+			mode:'add',
 		}
 	},
+	async created(){
+		let options = await this.func(this)
+		this.columns = options.columns
+		this.columns = options.columns
+		this.reqOptions = options.reqOptions
+		this.search = options.search
+		this.opration = options.opration
+		this.updateFieldMethod = options.updateField || (()=>{})
+		this.addFieldMethod = options.addField || options.updateField || (()=>{})
+		this.getList()
+	},
 	methods:{
-		getList(data={}){
+		getList(){
+			let params = {
+				pageNum:this.pageNum,
+				pageSize:this.pageSize,
+				...this.search.form
+			}
 			let list = this.reqOptions.list
-			if(!list)return
+			if(!list){
+				throw new Error("未配置reqOptions.list")
+				return
+			}
 			console.log([list.method])
-			request[list.method](list.url,data).then(res=>{
-				this.tableData = res.data
+			request[list.method](list.url,{params}).then(res=>{
+				this.tableData = res.data.list
+				this.pageTotal = res.data.total
+				list.callback && list.callback(this,res)
 			})
 		},
 		searchFun(...e){
@@ -110,7 +153,7 @@ export default {
 			})
 		},
 		async addFun(){
-			this.updateField =await this.updateFieldMethod()
+			this.updateField =await this.addFieldMethod()
 			this.show = true
 			this.mode = "add"
             
@@ -122,27 +165,99 @@ export default {
 			this.show = true
 			this.mode = "edit"
 		},
+		addForm(res){
+			let insert = this.reqOptions.insert
+			if(!insert){
+				throw new Error("未配置reqOptions.insert")
+			}
+			request[insert.method](insert.url,res).then(res=>{
+				console.log("插入---",res)
+				if(res.data){
+					this.show = false
+					this.getList()
+				}
+				
+			})
+		},
+		updateForm(res){
+			let update = this.reqOptions.update
+			if(!update){
+				throw new Error("未配置reqOptions.update")
+			}
+			request[update.method](update.url,res).then(res=>{
+				if(res.data){
+					this.show = false
+					this.getList()
+				}
+			})
+		},
 		dialogConfirm(){
 			console.log("提交")
 			this.$refs.updateForm.submit((res)=>{
 				console.log("提交",res)
+				//
+				if(this.mode == 'add'){
+					this.addForm(res)
+				}else{
+					this.updateForm(res)
+				}
+			})
+		},
+		async delUser(row){
+			this.$confirm("确定删除吗？","删除",{
+				confirmButtonText:"确定",
+				cancelButtonText:"取消",
+				type:"warning"
+			}).then(res=>{
+				console.log(row.id)
+				let remove = this.reqOptions.remove
+				if(!remove){
+					throw new Error("未配置reqOptions.remove")
+				}
+				request[remove.method](remove.url.replace("${id}",row.id)).then(res=>{
+					console.log(res)
+					this.getList()
+				})
+			})
+			
+		},
+		page(num){
+			console.log("page")
+			if(this.pageNum+num <= this.pageTotal && this.pageNum+num != 0){
+				this.pageNum += num
+				this.getList()
+			}
+		},
+		pageChange(num){
+			this.pageNum = num
+			this.getList()
+		},
+		sizeChange(num){
+			this.pageSize = num
+			this.pageNum = 1
+			this.getList()
+		},
+		resize(){
+			// 计算el-table的最大高度
+			setTimeout(()=>{
+				console.log("debugger")
+				this.tableHeight = window.innerHeight - 80 - this.$refs.search.$el.clientHeight - this.$refs.opration.$el.clientHeight -42 -42
 			})
 		}
 	},
-	async created(){
-		let options = await this.func(this)
-		this.columns = options.columns
-		this.columns = options.columns
-		this.reqOptions = options.reqOptions
-		this.search = options.search
-		this.opration = options.opration
-		this.updateFieldMethod = options.updateField || {}
-		this.getList()
+
+	mounted(){
+		console.log(this.$refs.search)
+		this.resize()
+		window.addEventListener("resize",this.resize)
+	},
+	beforeDestroy(){
+		window.removeEventListener("resize",this.resize)
 	},
 	computed:{
 		caclColumns(){
 			// 鉴权
-			if(true){
+			if(false){
 				let opration = [
 					{
 						key:"opration",

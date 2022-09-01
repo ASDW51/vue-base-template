@@ -48,16 +48,15 @@ export default {
 	computed:{
 		slen(){
 			let len = 0
+            console.log(this.label)
 			for(let i=0;i<this.label.length;i++){
-				console.log(this.label[i].charCodeAt())
 				if(this.label[i].charCodeAt()>255){
 					len +=1
 				}else{
 					len +=0.5
 				}
 			}
-			console.log("计算")
-			return "--count:"+ (14*len+44)+"px"
+			return "--count:"+ (14*len+44)+"px";
 		}
 	}
 }

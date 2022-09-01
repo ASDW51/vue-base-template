@@ -6,6 +6,8 @@
     "mock": "vue-cli-service serve --mode=mock",
     "serve": "vue-cli-service serve --mode=development",
     "build": "vue-cli-service build --mode=production",
+    "build:report": "vue-cli-service build --mode=production --report",
+
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },

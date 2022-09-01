@@ -1,6 +1,7 @@
 import axios from "axios"
 import store from "../store/index"
 import Vue from "vue"
+import router from "@/router"
 const instance = axios.create({
 	baseURL:process.env.NODE_ENV=="production"?process.env.VUE_APP_REQUEST_URL:"https://abcde.loca.lt/client",
 	timeout:0,
@@ -8,7 +9,8 @@ const instance = axios.create({
 		"Content-Type":"application/json"
 	}
 })
-const successCode = [200,201,203,204]
+const errCode = [200,201,203,204]
+const alertMessageCode = [201,202,203,204,205,401,403,404,500,501]
 // 前置拦截器
 instance.interceptors.request.use(config=>{
 	// 携带token
@@ -26,13 +28,22 @@ instance.interceptors.response.use(response=>{
 		store.dispatch("changeLoading",false)
 	}
 	console.log("response",response.data)
-	if(!(successCode.includes(response.data.code))){
-		console.log("状态码",response.data.code)
-		new Vue().$message.warning(response.data.message)
-		if(response.data.code == 401){
-			localStorage.removeItem("token")
+	if(alertMessageCode.includes(response.data.code)){
+		let tempVue = new Vue()
+		if(response.data.code == 201 && response.data.data==false){
+			tempVue.$message.warning(response.data.message)
+		}else if(response.data.code < 300){
+			tempVue.$message.success(response.data.message)
+		}else if(response.data.code >= 400){
+			tempVue.$message.error(response.data.message)
 		}
-		return Promise.reject(response.data)
+	}
+	// 失败的状态码
+
+	if(response.data.code == 401){
+		localStorage.removeItem("token")
+		router.push("/login")
+		return Promise.reject(response.data)	
 	}
 	return response.data
 },err=>{

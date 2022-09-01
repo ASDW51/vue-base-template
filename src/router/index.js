@@ -65,7 +65,7 @@ router.beforeEach(async (to,from,next)=>{
 	NProgress.start()
 	// 判断当前页面不是登录页且router不为空
 	if(to.path != "/login" && store.state.routes.length != 0 && (!addRouted || store.state.menu.length==0)){
-		if(store.state.menu.length==0){
+		if(store.state.menu.length==0 || store.state.role.length == 0){
 			await store.dispatch("updateRouter")
 		}
 		let sroutes  = store.state.routes.map(item=>({...item,component:loadView(item.cpath)}))

@@ -1,24 +1,61 @@
-# vue-base-template
+# twohand-admin
 
-## Project setup
+### page-table
+| props | 类型     | 示例 |
+| :---: | -------- | ---- |
+| func  | function |      |
+|       |          |      |
+|       |          |      |
+
+json-form
+
+| props     | 类型   | 示例    |
+| --------- | ------ | ------- |
+| form      | object | {}      |
+| direction | string | h/other |
+| options   | array  | []      |
+
+
+
+page-table.func示例
+
 ```
-npm install
+{
+    columns:[
+    	{
+    		key:"columnkey",
+    		label:"columnname",
+    		slot:"use slot"
+    	}
+    ],
+    reqOptions:{
+    	list:{
+    		method,
+    		url
+    	}, 分页列表
+    	insert，新增
+    	update, 更新
+    	remove, 删除
+    }，
+    search:json-form props,
+    opration:json-form props,
+    addField:json-form props,
+    updateField:json-form props,
+    
+}
 ```
 
-### Compiles and hot-reloads for development
+json-form.options示例
+
 ```
-npm run serve
+[
+    {
+		key:"fieldKey",
+		label:"fieldshowname",
+		type:component-name
+		required:Boolean , 不能为空
+		rules:[]
+    }
+]
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

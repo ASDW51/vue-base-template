@@ -31,6 +31,7 @@ import {
 	Option,
 	Dialog,
 	Upload,
+	Pagination,
 	MessageBox,
 	Message,
 	Notification
@@ -64,6 +65,7 @@ Vue.use(DatePicker)
 Vue.use(Option)
 Vue.use(Dialog)
 Vue.use(Upload)
+Vue.use(Pagination)
 Vue.use(Loading.directive)
 
 Vue.prototype.$loading = Loading.service
