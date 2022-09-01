@@ -1,10 +1,20 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import router from "@/router/index"
-import role from "./role/index"
 import {menu} from "@/apis/user/index"
 import {dynamicRouter} from "@/util/index"
+
+const path = require("path")
+
 Vue.use(Vuex)
+//自动装载modules
+const fileList = require.context("./modules",true,/\.js$/)
+let modules = {}
+fileList.keys().forEach(item=>{
+	let mod = require("./modules/" + path.join(item)).default
+	let modName = mod.name ||  item.replace(/\.\/(.*)\/.*\w+$/,'$1')
+	modules[modName] = mod
+})
 
 // 读取router
 let localRouter = localStorage.getItem("router")
@@ -13,6 +23,8 @@ let localMenu = localStorage.getItem("menu")
 localMenu = localMenu?JSON.parse(localMenu):[]
 let localRole = localStorage.getItem("role")
 localRole = localRole?JSON.parse(localRole):[]
+let permission = localStorage.getItem("permission")
+permission = permission?JSON.parse(permission):[]
 export default new Vuex.Store({
 	state: {
 		requestCount:0,
@@ -25,8 +37,9 @@ export default new Vuex.Store({
 		],
 		activeRouter:"/",
 		routes:localRouter,
-		menu:localMenu,
-		role:localRole
+		menu:[],
+		role:localRole,
+		permission:permission
 	},
 	getters: {
 		loading(state){
@@ -72,6 +85,9 @@ export default new Vuex.Store({
 		},
 		addRole(state,role){
 			state.role = role
+		},
+		addPermission(state,permission){
+			state.permission = permission
 		}
 	},
 	actions: {
@@ -100,6 +116,11 @@ export default new Vuex.Store({
 			context.commit("addRole",role)
 			localStorage.setItem("role",JSON.stringify(role))
 		},
+		addPermission(context,permission){
+			context.commit("addPermission",permission)
+			localStorage.setItem("permission",JSON.stringify(permission))
+
+		},
 		async updateRouter(context){
 			return menu().then(res=>{
 				console.log("获取到菜单")
@@ -112,7 +133,5 @@ export default new Vuex.Store({
 			})
 		}
 	},
-	modules: {
-		roleMod:role
-	},
+	modules,
 })

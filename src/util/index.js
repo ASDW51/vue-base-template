@@ -19,7 +19,8 @@ const dynamicRouter = (rotues,arr)=>{
 				cpath:item.cpath,
 				meta:{
 					addtab:Boolean(item.addtab),
-					text:item.cname
+					text:item.cname,
+					permission:item.perms
 				}
 			})
 		}

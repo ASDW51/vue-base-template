@@ -1,4 +1,5 @@
 export default {
+    name:"roleMod",
 	namespaced:true,
     state:{
         menuList:[]

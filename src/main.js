@@ -2,6 +2,7 @@ import Vue from "vue"
 import App from "./App.vue"
 import router from "./router"
 import store from "./store"
+import permission from "./directive/permission"
 import {Plugin} from "vue-fragment"
 //验证汉化
 import "@/util/validate-zhCn"
@@ -76,6 +77,7 @@ Vue.prototype.$prompt = MessageBox.prompt
 Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message
 Vue.config.productionTip = false
+Vue.directive("permission",permission)
 // 挂载所有api到Vue.$request上
 // Vue.use(api)
 Vue.use(Plugin)

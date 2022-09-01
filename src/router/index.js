@@ -34,6 +34,11 @@ const routes = [
 		path:"/login",
 		name:"login",
 		component:()=>import("@/views/login/index.vue")
+	},
+	{
+		path:"/403",
+		name:"forbidden",
+		component:()=>import("@/views/403.vue")
 	}
 ]
 
@@ -63,6 +68,7 @@ VueRouter.prototype.replace = function push(location, onResolve, onReject) {
 let addRouted = false
 router.beforeEach(async (to,from,next)=>{
 	NProgress.start()
+	console.log(to)
 	// 判断当前页面不是登录页且router不为空
 	if(to.path != "/login" && store.state.routes.length != 0 && (!addRouted || store.state.menu.length==0)){
 		if(store.state.menu.length==0 || store.state.role.length == 0){
@@ -79,6 +85,19 @@ router.beforeEach(async (to,from,next)=>{
 			replace:true
 		})
 	}
+
+	//验证是否有权限访问当前页面
+	let pageNeedPerm = to.meta.permission
+	if(pageNeedPerm){
+		if(!store.state.permission.includes(pageNeedPerm)){
+			new Vue().$message.warning("无权限访问该页面,请联系管理员")
+			router.push("/403")
+		}else{
+			console.log("页面权限验证通过")
+		}
+	}
+
+
 	if(whiteList.indexOf(to.path) !== -1)
 	{
 		// 白名单列表，无需验证

@@ -48,7 +48,16 @@ export default async (that)=>{
 			{
 				key:"opration",
 				label:"操作",
-				slot:"opration"
+				slot:"opration",
+				removeBtn:{
+					show:true,
+					permission:""
+				},
+				editBtn:{
+					show:true,
+					permission:""
+				},
+
 			}
 		],
 		reqOptions:{

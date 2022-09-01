@@ -41,6 +41,8 @@ export default {
 					// 存树形结构
                     
 					this.$store.dispatch("addTreeMenu",res.data.router)
+					//保存权限
+					this.$store.dispatch("addPermission",res.data.permission)
 					this.$router.push("/")
 				}
 			})

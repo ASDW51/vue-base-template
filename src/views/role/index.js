@@ -12,10 +12,19 @@ export default async (that)=>{
                 label:"备注"
             },
             {
-                key:"opration",
-                label:"操作",
-                slot:"opration"
-            }
+				key:"opration",
+				label:"操作",
+				slot:"opration",
+				removeBtn:{
+					show:true,
+					permission:"role:delete"
+				},
+				editBtn:{
+					show:true,
+					permission:""
+				},
+
+			}
         ],
         reqOptions:{
             list:{

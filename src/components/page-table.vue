@@ -24,7 +24,7 @@
                 header-cell-class-name="cust-head-cell"
                 >
                 <el-table-column 
-                    v-for="item in caclColumns" 
+                    v-for="item in columns" 
                     :key="item.key" 
                     :prop="item.key" 
                     :label="item.label" 
@@ -34,13 +34,13 @@
                     <template slot-scope="scope">
                             <div v-if="item.slot=='opration'">
 								<slot name="moreOpration" :data="scope"></slot>
-                                <el-button type="primary" size="small" @click="edit(scope.row)">编辑</el-button>
-                                <el-button type="danger" size="small" @click="delUser(scope.row)">删除</el-button>
-                        </div>
-                        <slot :name="item.slot" v-else-if="item.slot" v-bind:data="scope"></slot>
-                        <div v-else>
-                            {{scope.row[item.key]}}
-                        </div>
+                                <el-button type="primary" v-if="item?.editBtn?.show"  v-permission="item?.editBtn?.permission" size="small" @click="edit(scope.row)">编辑</el-button>
+                                <el-button type="danger" v-if="item?.removeBtn?.show" v-permission="item?.removeBtn?.permission" size="small" @click="delUser(scope.row)">删除</el-button>
+							</div>
+							<slot :name="item.slot" v-else-if="item.slot" v-bind:data="scope"></slot>
+							<div v-else>
+								{{scope.row[item.key]}}
+							</div>
                     </template>
                     
                 </el-table-column>
@@ -255,21 +255,7 @@ export default {
 		window.removeEventListener("resize",this.resize)
 	},
 	computed:{
-		caclColumns(){
-			// 鉴权
-			if(false){
-				let opration = [
-					{
-						key:"opration",
-						label:"操作",
-						slot:"opration"
-					}
-				]
-				return [...this.columns,...opration]
-			}else{
-				return this.columns
-			}
-		}
+
 	}
 }
 </script>
