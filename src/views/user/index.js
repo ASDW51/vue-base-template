@@ -3,7 +3,7 @@ import store from "@/store"
 
 export default async (that)=>{
 	let roleOption = []    
-    roleOption = store.state.role.map(item=>({value:item.id,label:item.name}))
+	roleOption = store.state.role.map(item=>({value:item.id,label:item.name}))
 	roleList().then(res=>{
 		console.log(res)
 	})
@@ -163,7 +163,7 @@ export default async (that)=>{
 						icon:"el-icon-refresh"
 					},
 					listeners:{
-						click:(...e)=>{
+						click:()=>{
 							that.getList()
 						}
 					}

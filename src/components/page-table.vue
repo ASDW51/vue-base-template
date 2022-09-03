@@ -6,14 +6,22 @@
                 :form="search.form"
                 :labelPosition="search.labelPosition"
                 ref="search"
-                :options="search.options"></json-form>
+                :options="search.options">
+				<template :slot="item.slot" v-for="item in searchSlots">
+					<slot :name="item.slot"></slot>
+				</template>
+			</json-form>
         </div>
         <div>
             <json-form
                 :direction="opration.direction"
                 :form="opration.form"
                 ref="opration"
-                :options="opration.options"></json-form>
+                :options="opration.options">
+				<template :slot="item.slot" v-for="item in oprationSlots">
+					<slot :name="item.slot"></slot>
+				</template>
+			</json-form>
         </div>
         <div>
             <el-table 
@@ -22,6 +30,7 @@
 				:height="tableHeight"
                 header-row-class-name="cust-head"
                 header-cell-class-name="cust-head-cell"
+				v-bind="props"
                 >
                 <el-table-column 
                     v-for="item in columns" 
@@ -29,7 +38,7 @@
                     :prop="item.key" 
                     :label="item.label" 
                     :width="item.width"
-                    align="center"
+                    :align="item.align?item.align:'center'"
                     >
                     <template slot-scope="scope">
                             <div v-if="item.slot=='opration'">
@@ -38,9 +47,9 @@
                                 <el-button type="danger" v-if="item?.removeBtn?.show" v-permission="item?.removeBtn?.permission" size="small" @click="delUser(scope.row)">删除</el-button>
 							</div>
 							<slot :name="item.slot" v-else-if="item.slot" v-bind:data="scope"></slot>
-							<div v-else>
+							<template v-else>
 								{{scope.row[item.key]}}
-							</div>
+							</template>
                     </template>
                     
                 </el-table-column>
@@ -68,6 +77,9 @@
                     :form="updateField.form"
                     ref="updateForm"
                     :options="updateField.options">
+					<template :slot="item.name" v-for="item in updateFiledSlots">
+						<slot :name="item.name"></slot>
+					</template>
                 </json-form>
                 <span slot="footer">
                     <el-button @click="show=false">取消</el-button>
@@ -94,7 +106,11 @@ export default {
 			type:Boolean,
 			default:true,
 		},
-		custComp:{}
+		custComp:{},
+		props:{
+			type:Object,
+			default:()=>({})
+		}
 	},
 	components:{
 		jsonForm
@@ -112,16 +128,15 @@ export default {
 			pageSize:10,
 			pageNum:1,
 			tableHeight:350,
-			mode:'add',
+			mode:"add",
 		}
 	},
 	async created(){
 		let options = await this.func(this)
-		this.columns = options.columns
-		this.columns = options.columns
-		this.reqOptions = options.reqOptions
-		this.search = options.search
-		this.opration = options.opration
+		this.columns = options.columns || []
+		this.reqOptions = options.reqOptions || {}
+		this.search = options.search || {}
+		this.opration = options.opration || {}
 		this.updateFieldMethod = options.updateField || (()=>{})
 		this.addFieldMethod = options.addField || options.updateField || (()=>{})
 		this.getList()
@@ -196,7 +211,7 @@ export default {
 			this.$refs.updateForm.submit((res)=>{
 				console.log("提交",res)
 				//
-				if(this.mode == 'add'){
+				if(this.mode == "add"){
 					this.addForm(res)
 				}else{
 					this.updateForm(res)
@@ -255,7 +270,17 @@ export default {
 		window.removeEventListener("resize",this.resize)
 	},
 	computed:{
-
+		// 计算search 插槽
+		searchSlots(){
+			return this.search?.options?.filter(item=>item.slot)
+		},
+		//opration 插槽
+		oprationSlots(){
+			return this.opration?.options?.filter(item=>item.slot)
+		},
+		updateFiledSlots(){
+			return this.updateField?.options?.filter(item=>item.slot)
+		}
 	}
 }
 </script>

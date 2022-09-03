@@ -12,7 +12,7 @@ const fileList = require.context("./modules",true,/\.js$/)
 let modules = {}
 fileList.keys().forEach(item=>{
 	let mod = require("./modules/" + path.join(item)).default
-	let modName = mod.name ||  item.replace(/\.\/(.*)\/.*\w+$/,'$1')
+	let modName = mod.name ||  item.replace(/\.\/(.*)\/.*\w+$/,"$1")
 	modules[modName] = mod
 })
 

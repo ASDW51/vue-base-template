@@ -42,7 +42,7 @@ export default {
 			if(role){
 				return role.name
 			}
-			return ''
+			return ""
 		}
 	},
 	computed:{

@@ -39,65 +39,65 @@
 import pageTable from "@/components/page-table.vue"
 import func from "./index.js"
 import {Drawer,Tree} from "element-ui"
-import { rolePermission, savePermission } from '@/apis/role/index.js'
+import { rolePermission, savePermission } from "@/apis/role/index.js"
 import {mapState} from "vuex"
 export default {
-    name:"role",
-    components:{
-        pageTable,
-        Drawer,
-        Tree
-    },
-    data(){
-        return {
-            func,
-            drawer:false,
-            currentEditRole:"",
-            currentRoleId:-1,
-            treeProps:{
-                children:"children",
-                label:"cname"
-            },
-            checkedKey:[]
-        }
-    },
-    created(){
-        console.log(this.$store.state.roleMod)
-    },
-    methods:{
-        editPermission(scope){
-            this.drawer = true
-            console.log(scope)
-            this.currentEditRole = scope.row.name
-            this.currentRoleId = scope.row.id
-            rolePermission({id:scope.row.id}).then(res=>{
-                console.log(res)
-                this.checkedKey = res.data
-                this.$refs.tree.setCheckedKeys(res.data)
-            })
-        },
-        savePersmission(){
-            if(this.currentRoleId==-1)return
-            // 获取选中id
-            let keys = this.$refs.tree.getCheckedKeys()
-            let halfKeys = this.$refs.tree.getHalfCheckedKeys()
-            let menuIdList = [...keys,...halfKeys]
-            savePermission({menuIdList,roleId:this.currentRoleId}).then(res=>{
-                console.log("保存权限",res)
-                if(res.data){
-                    this.drawer = false
-                }
-            })
-        }
-    },
-    computed:{
-        title(){
-            return '权限设置-----'+this.currentEditRole
-        },
-        ...mapState({
-            menuList:state=>state.roleMod.menuList
-        })
-    }
+	name:"role",
+	components:{
+		pageTable,
+		Drawer,
+		Tree
+	},
+	data(){
+		return {
+			func,
+			drawer:false,
+			currentEditRole:"",
+			currentRoleId:-1,
+			treeProps:{
+				children:"children",
+				label:"cname"
+			},
+			checkedKey:[]
+		}
+	},
+	created(){
+		console.log(this.$store.state.roleMod)
+	},
+	methods:{
+		editPermission(scope){
+			this.drawer = true
+			console.log(scope)
+			this.currentEditRole = scope.row.name
+			this.currentRoleId = scope.row.id
+			rolePermission({id:scope.row.id}).then(res=>{
+				console.log(res)
+				this.checkedKey = res.data
+				this.$refs.tree.setCheckedKeys(res.data)
+			})
+		},
+		savePersmission(){
+			if(this.currentRoleId==-1)return
+			// 获取选中id
+			let keys = this.$refs.tree.getCheckedKeys()
+			let halfKeys = this.$refs.tree.getHalfCheckedKeys()
+			let menuIdList = [...keys,...halfKeys]
+			savePermission({menuIdList,roleId:this.currentRoleId}).then(res=>{
+				console.log("保存权限",res)
+				if(res.data){
+					this.drawer = false
+				}
+			})
+		}
+	},
+	computed:{
+		title(){
+			return "权限设置-----"+this.currentEditRole
+		},
+		...mapState({
+			menuList:state=>state.roleMod.menuList
+		})
+	}
 
 }
 </script>

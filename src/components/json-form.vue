@@ -12,13 +12,24 @@
                     <component :is="item.type" v-model="form[item.key]" v-bind="item.props" v-on="item.listeners" :style="{width:item.width===false?'':(item.width || '200px')}">
                         
                         <template v-if="item.type == 'el-select'">
-                            <el-option
-                                v-for="(subitem,index) in item.options"
-                                :key="index"
-                                :value="subitem.value"
-                                :label="subitem.label">
-                                    {{subitem.label}}
-                            </el-option>
+							<template v-if="item.readStore">
+								<el-option
+									v-for="(subitem,index) in $store.state.option[item.readStore]"
+									:key="index"
+									:value="subitem.value"
+									:label="subitem.label">
+										{{subitem.label}}
+								</el-option>
+							</template>
+                            <template v-else>
+								<el-option
+									v-for="(subitem,index) in item.options"
+									:key="index"
+									:value="subitem.value"
+									:label="subitem.label">
+										{{subitem.label}}
+								</el-option>
+							</template>
                         </template>
                         <template v-else-if="item.type == 'el-button'">
                             {{item.label}}

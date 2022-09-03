@@ -3,6 +3,7 @@ import VueRouter from "vue-router"
 import store from "@/store"
 import  NProgress  from "nprogress"
 import Index from "../views/Index.vue"
+import { warning } from "@/util/notice"
 Vue.use(VueRouter)
 //路由白名单
 let whiteList = ["/login"]
@@ -90,7 +91,7 @@ router.beforeEach(async (to,from,next)=>{
 	let pageNeedPerm = to.meta.permission
 	if(pageNeedPerm){
 		if(!store.state.permission.includes(pageNeedPerm)){
-			new Vue().$message.warning("无权限访问该页面,请联系管理员")
+			warning("无权限访问该页面,请联系管理员")
 			router.push("/403")
 		}else{
 			console.log("页面权限验证通过")

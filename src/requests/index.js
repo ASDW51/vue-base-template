@@ -2,6 +2,7 @@ import axios from "axios"
 import store from "../store/index"
 import Vue from "vue"
 import router from "@/router"
+import { error, success, warning } from "@/util/notice"
 const instance = axios.create({
 	baseURL:process.env.NODE_ENV=="production"?process.env.VUE_APP_REQUEST_URL:"https://abcde.loca.lt/client",
 	timeout:0,
@@ -29,13 +30,12 @@ instance.interceptors.response.use(response=>{
 	}
 	console.log("response",response.data)
 	if(alertMessageCode.includes(response.data.code)){
-		let tempVue = new Vue()
 		if(response.data.code == 201 && response.data.data==false){
-			tempVue.$message.warning(response.data.message)
+			warning(response.data.message)
 		}else if(response.data.code < 300){
-			tempVue.$message.success(response.data.message)
+			success(response.data.message)
 		}else if(response.data.code >= 400){
-			tempVue.$message.error(response.data.message)
+			error(response.data.message)
 		}
 	}
 	// 失败的状态码
@@ -51,7 +51,7 @@ instance.interceptors.response.use(response=>{
 	if(!err.config.cancelLoading){
 		store.dispatch("changeLoading",false)
 	}
-	new Vue().$message.error(err.message)
+	error(err.message)
 	console.log(err)
 	//需要返回reject 不然错误的时候实例请求还是会走resolve
 	return Promise.reject(err)

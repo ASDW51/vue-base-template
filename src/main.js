@@ -32,6 +32,8 @@ import {
 	Option,
 	Dialog,
 	Upload,
+	Tag,
+	Switch,
 	Pagination,
 	MessageBox,
 	Message,
@@ -66,6 +68,8 @@ Vue.use(DatePicker)
 Vue.use(Option)
 Vue.use(Dialog)
 Vue.use(Upload)
+Vue.use(Tag)
+Vue.use(Switch)
 Vue.use(Pagination)
 Vue.use(Loading.directive)
 

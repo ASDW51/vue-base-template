@@ -48,7 +48,7 @@ export default {
 	computed:{
 		slen(){
 			let len = 0
-            console.log(this.label)
+			console.log(this.label)
 			for(let i=0;i<this.label.length;i++){
 				if(this.label[i].charCodeAt()>255){
 					len +=1
@@ -56,7 +56,7 @@ export default {
 					len +=0.5
 				}
 			}
-			return "--count:"+ (14*len+44)+"px";
+			return "--count:"+ (14*len+44)+"px"
 		}
 	}
 }

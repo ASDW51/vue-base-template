@@ -20,7 +20,8 @@ const dynamicRouter = (rotues,arr)=>{
 				meta:{
 					addtab:Boolean(item.addtab),
 					text:item.cname,
-					permission:item.perms
+					permission:item.perms,
+					keep:item.keep==1?true:false
 				}
 			})
 		}

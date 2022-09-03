@@ -64,9 +64,12 @@
 		</el-header>
 
         <el-main>
-		  <keep-alive>
-			 <router-view></router-view>
-		  </keep-alive>
+		  <transition name="slide-left">
+			<keep-alive>
+				<router-view v-if="$route.meta.keep" class="child-view"></router-view>
+			</keep-alive>
+		  </transition>
+			<router-view v-if="!$route.meta.keep" class="child-view"></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -107,7 +110,7 @@ export default {
 		}
 	},
 	computed:{
-		...mapGetters(["openPages","activeRouter"]),
+		...mapGetters(["openPages","activeRouter","caches"]),
 		...mapState(["menu"]),
 		defaultActive(){
 			return this.$route.path
@@ -165,4 +168,20 @@ export default {
 // 		padding-left:15px !important;
 // 	}	
 // }
+.child-view {
+
+  transition: all 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+}
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  -webkit-transform: translate(-80px, 0);
+  transform: translate(-80px, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  -webkit-transform: translate(100%, 0);
+  transform: translate(100%, 0);
+}
 </style>
