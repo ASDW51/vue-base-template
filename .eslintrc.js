@@ -28,6 +28,7 @@ module.exports = {
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"indent":["error","tab"],  //tab键缩进
 		"quotes":["error","double"], //使用双引号
+		"no-mixed-spaces-and-tabs":0,
 		"semi":["error","never",{beforeStatementContinuationChars:"always"}]  //bu分号结尾
 	}
 }

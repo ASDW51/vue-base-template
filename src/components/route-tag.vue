@@ -35,9 +35,6 @@ export default {
 		}
 	},
 	methods:{
-		chartLen(str){
-			
-		},
 		jump(){
 			this.$emit("click",this.path)
 		},

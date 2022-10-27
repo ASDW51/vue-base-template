@@ -15,7 +15,7 @@ const dynamicRouter = (rotues,arr)=>{
 		if(item.type==1){
 			arr.push({
 				path:item.path,
-				name:item.cname,
+				name:item.name,
 				cpath:item.cpath,
 				meta:{
 					addtab:Boolean(item.addtab),
@@ -31,9 +31,14 @@ const dynamicRouter = (rotues,arr)=>{
 const loadView = (view)=>{
 	return  (resolve) => require([`@/views/${view}`], resolve)
 }
+
+const getFilePath = (src)=>{
+	return /^https?:\/\//.test(src)?src:process.env.VUE_APP_REQUEST_URL+src
+}
 export {
 	debounce,
 	throttle,
 	dynamicRouter,
-	loadView
+	loadView,
+	getFilePath
 }

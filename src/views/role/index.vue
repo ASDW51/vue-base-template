@@ -3,7 +3,7 @@
         <page-table
         :func="func"
         >
-            <template v-slot:moreOpration="scope">
+            <template v-slot:moreoperation="scope">
                 <el-button type="warning" size="small" @click="editPermission(scope.data)">权限设置</el-button>
             </template>
         </page-table>

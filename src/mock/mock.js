@@ -1,12 +1,87 @@
-import Mock from "mockjs"
-Mock.mock("/test","get",(options)=>{
-	console.log("mock--/test",options)
-	return Mock.mock({"code":200,"data":"success"})
+import Mock from 'mockjs'
+Mock.mock("/client/mini/login","post",(options)=>{
+    console.log("mock--/client/mini/login",options)
+    return Mock.mock({"code":200,"message":"请求成功","data":{"router":[{"id":1,"createTime":null,"updateTime":null,"pid":0,"name":"home","cname":"首页","path":"/","cpath":null,"perms":null,"type":1,"icon":"el-icon-el-icon-s-home\r\nel-icon-s-home","addtab":1,"close":1,"keep":1,"weight":111,"children":[]},{"id":6,"createTime":null,"updateTime":null,"pid":0,"name":"swipe","cname":"轮播图","path":"/swipe","cpath":"","perms":"","type":1,"icon":"el-icon-picture","addtab":1,"close":1,"keep":1,"weight":99,"children":[]},{"id":4,"createTime":null,"updateTime":null,"pid":0,"name":"","cname":"系统管理","path":"/sys","cpath":null,"perms":"","type":0,"icon":"el-icon-setting","addtab":1,"close":null,"keep":1,"weight":0,"children":[{"id":2,"createTime":null,"updateTime":null,"pid":4,"name":"","cname":"用户管理","path":"/sys/user","cpath":"user/index.vue","perms":"role:list","type":1,"icon":"el-icon-user-solid","addtab":1,"close":1,"keep":1,"weight":3,"children":[]},{"id":5,"createTime":null,"updateTime":null,"pid":4,"name":"role","cname":"角色管理","path":"/sys/role","cpath":"role/index.vue","perms":"role:list","type":1,"icon":"el-icon-s-check","addtab":1,"close":1,"keep":0,"weight":2,"children":[]},{"id":9,"createTime":null,"updateTime":null,"pid":4,"name":"permission","cname":"菜单管理","path":"/sys/permission","cpath":"permission/index.vue","perms":"","type":1,"icon":"el-icon-s-check","addtab":1,"close":1,"keep":1,"weight":1,"children":[]}]}],"permission":["role:list"],"userinfo":{"id":6,"createTime":"2022-08-25 14:17:44","updateTime":"2022-08-30 16:07:04","openid":"","nickname":"admin","pwd":"a","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","loginTime":"2022-09-05T10:18:00"},"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcGVuaWQiOiIiLCJpZCI6NiwiZXhwIjoxNjYyNzcyMzc5LCJ1c2VybmFtZSI6ImFkbWluIn0.8n-A-fTAX3m8zhqzsTBCo0wUHsme1BlirjFYqz6MaZQ"},"timestamp":1662599579461})
 })
 
-Mock.mock("/swipe","get",(options)=>{
-	console.log("mock--/swipe",options)
-	return Mock.mock({"code":200,"data|3":["@image(\"100x200\")"]})
+Mock.mock("/client/role/all","get",(options)=>{
+    console.log("mock--/client/role/all",options)
+    return Mock.mock({"code":200,"message":"请求成功","data":[{"id":1,"createTime":null,"updateTime":"2022-08-30 15:47:47","name":"管理员","remark":"拥有最高级权限"},{"id":2,"createTime":null,"updateTime":"2022-08-30 15:18:18","name":"普通用户11","remark":null},{"id":3,"createTime":null,"updateTime":null,"name":"普通用户2","remark":null},{"id":5,"createTime":"2022-08-30 15:26:54","updateTime":"2022-08-30 15:26:54","name":"小程序用户","remark":"小程序注册用户"},{"id":8,"createTime":null,"updateTime":null,"name":"测试","remark":null},{"id":9,"createTime":"2022-09-05 10:38:08","updateTime":"2022-09-05 10:38:08","name":"测试2","remark":"测试时间格式"},{"id":10,"createTime":"2022-09-05 10:47:49","updateTime":"2022-09-05 10:47:49","name":"测试3","remark":null},{"id":11,"createTime":"2022-09-05 10:47:59","updateTime":"2022-09-05 10:47:59","name":"测试4","remark":null},{"id":12,"createTime":"2022-09-05 10:48:06","updateTime":"2022-09-05 10:48:06","name":"测试5","remark":null},{"id":13,"createTime":"2022-09-05 10:48:15","updateTime":"2022-09-05 10:48:15","name":"测试6","remark":null},{"id":14,"createTime":"2022-09-05 10:48:33","updateTime":"2022-09-05 10:48:33","name":"测试7","remark":null},{"id":15,"createTime":"2022-09-05 10:48:41","updateTime":"2022-09-05 10:48:41","name":"测试8","remark":null}],"timestamp":1662599660492})
+})
+
+Mock.mock("/client/role/permission.*","get",(options)=>{
+    console.log("mock--/client/role/permission.*",options)
+    return Mock.mock({"code":200,"message":"请求成功","data":[1,6,4,2,5,7,8,9],"timestamp":1662600370442})
+})
+
+Mock.mock("/client/role/permission","post",(options)=>{
+    console.log("mock--/client/role/permission",options)
+    return Mock.mock({"code":201,"message":"操作成功","data":true,"timestamp":1662600431416})
+})
+
+Mock.mock("/client/user.*","get",(options)=>{
+    console.log("mock--/client/user.*",options)
+    return Mock.mock({"code":200,"message":"请求成功","data":{"pages":1,"total":8,"pageNum":1,"pageSize":10,"list":[{"id":3,"openid":"","nickname":"asdw","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","loginTime":"2022-08-09 09:48:07","updateTime":"2022-08-30 12:18:05","createTime":"2022-08-20 10:57:46","roleId":2},{"id":5,"openid":"oyQfJ5MjUKRpbb_3mVOVqTNoLCdY","nickname":"微信用户","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","loginTime":"2022-08-30 09:52:55","updateTime":"2022-08-30 15:27:30","createTime":"2022-08-20 16:01:33","roleId":5},{"id":6,"openid":"","nickname":"admin","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","loginTime":"2022-09-08 09:12:59","updateTime":"2022-08-30 16:07:04","createTime":"2022-08-25 14:17:44","roleId":1},{"id":13,"openid":null,"nickname":"yyyy","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","loginTime":"2022-08-31 18:00:38","updateTime":"2022-08-30 12:36:09","createTime":"2022-08-29 20:05:39","roleId":2},{"id":14,"openid":null,"nickname":"测试账号","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","loginTime":"2022-08-30 09:48:35","updateTime":"2022-08-30 14:05:18","createTime":"2022-08-30 09:44:23","roleId":1},{"id":15,"openid":null,"nickname":"测试2","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","loginTime":"2022-08-31 16:19:13","updateTime":"2022-08-31 16:18:36","createTime":"2022-08-30 09:49:15","roleId":3},{"id":16,"openid":null,"nickname":"111","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","loginTime":"2022-08-30 10:59:53","updateTime":"2022-08-30 10:59:53","createTime":"2022-08-30 10:59:53","roleId":2},{"id":20,"openid":null,"nickname":"test","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","loginTime":"2022-09-05 10:28:00","updateTime":"2022-09-05 10:28:00","createTime":"2022-09-05 10:28:00","roleId":2}]},"timestamp":1662599660804})
+})
+
+Mock.mock("/client/menu","get",(options)=>{
+    console.log("mock--/client/menu",options)
+    return Mock.mock({"code":200,"message":"请求成功","data":{"menu":[{"id":1,"createTime":null,"updateTime":null,"pid":0,"name":"home","cname":"首页","path":"/","cpath":null,"perms":null,"type":1,"icon":"el-icon-el-icon-s-home\r\nel-icon-s-home","addtab":1,"close":1,"keep":1,"weight":111,"children":[]},{"id":6,"createTime":null,"updateTime":null,"pid":0,"name":"swipe","cname":"轮播图","path":"/swipe","cpath":"","perms":"","type":1,"icon":"el-icon-picture","addtab":1,"close":1,"keep":1,"weight":99,"children":[]},{"id":4,"createTime":null,"updateTime":null,"pid":0,"name":"","cname":"系统管理","path":"/sys","cpath":null,"perms":"","type":0,"icon":"el-icon-setting","addtab":1,"close":null,"keep":1,"weight":0,"children":[{"id":2,"createTime":null,"updateTime":null,"pid":4,"name":"","cname":"用户管理","path":"/sys/user","cpath":"user/index.vue","perms":"role:list","type":1,"icon":"el-icon-user-solid","addtab":1,"close":1,"keep":1,"weight":3,"children":[]},{"id":5,"createTime":null,"updateTime":null,"pid":4,"name":"role","cname":"角色管理","path":"/sys/role","cpath":"role/index.vue","perms":"role:list","type":1,"icon":"el-icon-s-check","addtab":1,"close":1,"keep":0,"weight":2,"children":[]},{"id":9,"createTime":null,"updateTime":null,"pid":4,"name":"permission","cname":"菜单管理","path":"/sys/permission","cpath":"permission/index.vue","perms":"","type":1,"icon":"el-icon-s-check","addtab":1,"close":1,"keep":1,"weight":1,"children":[]}]}],"role":[{"id":1,"createTime":null,"updateTime":"2022-08-30 15:47:47","name":"管理员","remark":"拥有最高级权限"},{"id":2,"createTime":null,"updateTime":"2022-08-30 15:18:18","name":"普通用户11","remark":null},{"id":3,"createTime":null,"updateTime":null,"name":"普通用户2","remark":null},{"id":5,"createTime":"2022-08-30 15:26:54","updateTime":"2022-08-30 15:26:54","name":"小程序用户","remark":"小程序注册用户"},{"id":8,"createTime":null,"updateTime":null,"name":"测试","remark":null},{"id":9,"createTime":"2022-09-05 10:38:08","updateTime":"2022-09-05 10:38:08","name":"测试2","remark":"测试时间格式"},{"id":10,"createTime":"2022-09-05 10:47:49","updateTime":"2022-09-05 10:47:49","name":"测试3","remark":null},{"id":11,"createTime":"2022-09-05 10:47:59","updateTime":"2022-09-05 10:47:59","name":"测试4","remark":null},{"id":12,"createTime":"2022-09-05 10:48:06","updateTime":"2022-09-05 10:48:06","name":"测试5","remark":null},{"id":13,"createTime":"2022-09-05 10:48:15","updateTime":"2022-09-05 10:48:15","name":"测试6","remark":null},{"id":14,"createTime":"2022-09-05 10:48:33","updateTime":"2022-09-05 10:48:33","name":"测试7","remark":null},{"id":15,"createTime":"2022-09-05 10:48:41","updateTime":"2022-09-05 10:48:41","name":"测试8","remark":null}],"permission":["role:list"]},"timestamp":1662599859927})
+})
+
+Mock.mock("/client/user","put",(options)=>{
+    console.log("mock--/client/user",options)
+    return Mock.mock({"code":201,"message":"修改成功","data":true,"timestamp":1662599958448})
+})
+
+Mock.mock("/client/user","post",(options)=>{
+    console.log("mock--/client/user",options)
+    return Mock.mock({"code":201,"message":"操作成功","data":true,"timestamp":1662600046681})
+})
+
+Mock.mock("/client/userdel/*","delete",(options)=>{
+    console.log("mock--/client/userdel/*",options)
+    return Mock.mock({"code":204,"message":"删除成功","data":true,"timestamp":1662600067495})
+})
+
+Mock.mock("/client/role.*","get",(options)=>{
+    console.log("mock--/client/role.*",options)
+    return Mock.mock({"code":200,"message":"请求成功","data":{"pages":2,"total":12,"pageNum":1,"pageSize":10,"list":[{"id":1,"createTime":null,"updateTime":"2022-08-30 15:47:47","name":"管理员","remark":"拥有最高级权限"},{"id":2,"createTime":null,"updateTime":"2022-08-30 15:18:18","name":"普通用户11","remark":null},{"id":3,"createTime":null,"updateTime":null,"name":"普通用户2","remark":null},{"id":5,"createTime":"2022-08-30 15:26:54","updateTime":"2022-08-30 15:26:54","name":"小程序用户","remark":"小程序注册用户"},{"id":8,"createTime":null,"updateTime":null,"name":"测试","remark":null},{"id":9,"createTime":"2022-09-05 10:38:08","updateTime":"2022-09-05 10:38:08","name":"测试2","remark":"测试时间格式"},{"id":10,"createTime":"2022-09-05 10:47:49","updateTime":"2022-09-05 10:47:49","name":"测试3","remark":null},{"id":11,"createTime":"2022-09-05 10:47:59","updateTime":"2022-09-05 10:47:59","name":"测试4","remark":null},{"id":12,"createTime":"2022-09-05 10:48:06","updateTime":"2022-09-05 10:48:06","name":"测试5","remark":null},{"id":13,"createTime":"2022-09-05 10:48:15","updateTime":"2022-09-05 10:48:15","name":"测试6","remark":null}],"menuList":[{"id":1,"createTime":null,"updateTime":null,"pid":0,"name":"home","cname":"首页","path":"/","cpath":null,"perms":null,"type":1,"icon":"el-icon-el-icon-s-home\r\nel-icon-s-home","addtab":1,"close":1,"keep":1,"weight":111,"children":[]},{"id":6,"createTime":null,"updateTime":null,"pid":0,"name":"swipe","cname":"轮播图","path":"/swipe","cpath":"","perms":"","type":1,"icon":"el-icon-picture","addtab":1,"close":1,"keep":1,"weight":99,"children":[]},{"id":4,"createTime":null,"updateTime":null,"pid":0,"name":"","cname":"系统管理","path":"/sys","cpath":null,"perms":"","type":0,"icon":"el-icon-setting","addtab":1,"close":null,"keep":1,"weight":0,"children":[{"id":2,"createTime":null,"updateTime":null,"pid":4,"name":"","cname":"用户管理","path":"/sys/user","cpath":"user/index.vue","perms":"role:list","type":1,"icon":"el-icon-user-solid","addtab":1,"close":1,"keep":1,"weight":3,"children":[]},{"id":5,"createTime":null,"updateTime":null,"pid":4,"name":"role","cname":"角色管理","path":"/sys/role","cpath":"role/index.vue","perms":"role:list","type":1,"icon":"el-icon-s-check","addtab":1,"close":1,"keep":0,"weight":2,"children":[{"id":7,"createTime":null,"updateTime":null,"pid":5,"name":"role:list","cname":"查看","path":"/swipe/2","cpath":"","perms":"","type":2,"icon":"","addtab":1,"close":null,"keep":1,"weight":0,"children":[]},{"id":8,"createTime":null,"updateTime":null,"pid":5,"name":"role:delete","cname":"删除","path":"","cpath":"","perms":"","type":2,"icon":"","addtab":1,"close":1,"keep":1,"weight":0,"children":[]}]},{"id":9,"createTime":null,"updateTime":null,"pid":4,"name":"permission","cname":"菜单管理","path":"/sys/permission","cpath":"permission/index.vue","perms":"","type":1,"icon":"el-icon-s-check","addtab":1,"close":1,"keep":1,"weight":1,"children":[{"id":12,"createTime":"2022-09-05 10:57:04","updateTime":"2022-09-05 10:57:04","pid":9,"name":"menu:list","cname":"查看","path":"","cpath":"","perms":"","type":2,"icon":"","addtab":1,"close":1,"keep":1,"weight":0,"children":[]}]},{"id":10,"createTime":"2022-09-03 15:59:50","updateTime":"2022-09-03 15:59:50","pid":4,"name":"setting","cname":"系统设置","path":"/sys/setting","cpath":"setting/index.vue","perms":"","type":1,"icon":"sd","addtab":1,"close":1,"keep":1,"weight":-2,"children":[]}]},{"id":11,"createTime":"2022-09-05 10:27:35","updateTime":"2022-09-05 10:27:35","pid":0,"name":"test","cname":"test","path":"test","cpath":"test","perms":"test","type":0,"icon":"test","addtab":0,"close":0,"keep":0,"weight":-1,"children":[]}]},"timestamp":1662600138575})
+})
+
+Mock.mock("/client/role","post",(options)=>{
+    console.log("mock--/client/role",options)
+    return Mock.mock({"code":201,"message":"操作成功","data":true,"timestamp":1662600195278})
+})
+
+Mock.mock("/client/role/*","delete",(options)=>{
+    console.log("mock--/client/role/*",options)
+    return Mock.mock({"code":204,"message":"删除成功","data":true,"timestamp":1662600256618})
+})
+
+Mock.mock("/client/role","put",(options)=>{
+    console.log("mock--/client/role",options)
+    return Mock.mock({"code":201,"message":"修改成功","data":true,"timestamp":1662600304106})
+})
+
+Mock.mock("/client/menu/base","get",(options)=>{
+    console.log("mock--/client/menu/base",options)
+    return Mock.mock({"code":200,"message":"请求成功","data":{"pages":1,"total":4,"pageNum":1,"pageSize":4,"list":[{"id":1,"createTime":null,"updateTime":null,"pid":0,"name":"home","cname":"首页","path":"/","cpath":null,"perms":null,"type":1,"icon":"el-icon-el-icon-s-home\r\nel-icon-s-home","addtab":1,"close":1,"keep":1,"weight":111,"children":[]},{"id":6,"createTime":null,"updateTime":null,"pid":0,"name":"swipe","cname":"轮播图","path":"/swipe","cpath":"","perms":"","type":1,"icon":"el-icon-picture","addtab":1,"close":1,"keep":1,"weight":99,"children":[]},{"id":4,"createTime":null,"updateTime":null,"pid":0,"name":"","cname":"系统管理","path":"/sys","cpath":null,"perms":"","type":0,"icon":"el-icon-setting","addtab":1,"close":null,"keep":1,"weight":0,"children":[{"id":2,"createTime":null,"updateTime":null,"pid":4,"name":"","cname":"用户管理","path":"/sys/user","cpath":"user/index.vue","perms":"role:list","type":1,"icon":"el-icon-user-solid","addtab":1,"close":1,"keep":1,"weight":3,"children":[]},{"id":5,"createTime":null,"updateTime":null,"pid":4,"name":"role","cname":"角色管理","path":"/sys/role","cpath":"role/index.vue","perms":"role:list","type":1,"icon":"el-icon-s-check","addtab":1,"close":1,"keep":0,"weight":2,"children":[{"id":7,"createTime":null,"updateTime":null,"pid":5,"name":"role:list","cname":"查看","path":"/swipe/2","cpath":"","perms":"","type":2,"icon":"","addtab":1,"close":null,"keep":1,"weight":0,"children":[]},{"id":8,"createTime":null,"updateTime":null,"pid":5,"name":"role:delete","cname":"删除","path":"","cpath":"","perms":"","type":2,"icon":"","addtab":1,"close":1,"keep":1,"weight":0,"children":[]}]},{"id":9,"createTime":null,"updateTime":null,"pid":4,"name":"permission","cname":"菜单管理","path":"/sys/permission","cpath":"permission/index.vue","perms":"","type":1,"icon":"el-icon-s-check","addtab":1,"close":1,"keep":1,"weight":1,"children":[]},{"id":10,"createTime":"2022-09-03 15:59:50","updateTime":"2022-09-03 15:59:50","pid":4,"name":"setting","cname":"系统设置","path":"/sys/setting","cpath":"setting/index.vue","perms":"","type":1,"icon":"sd","addtab":1,"close":1,"keep":1,"weight":-2,"children":[]}]},{"id":11,"createTime":"2022-09-05 10:27:35","updateTime":"2022-09-05 10:27:35","pid":0,"name":"test","cname":"test","path":"test","cpath":"test","perms":"test","type":0,"icon":"test","addtab":0,"close":0,"keep":0,"weight":-1,"children":[]}],"menuType":[{"label":"目录","value":0},{"label":"页面","value":1},{"label":"按钮","value":2}],"menuList":[{"label":"首页","value":1,"type":1},{"label":"用户管理","value":2,"type":1},{"label":"系统管理","value":4,"type":0},{"label":"角色管理","value":5,"type":1},{"label":"轮播图","value":6,"type":1},{"label":"菜单管理","value":9,"type":1},{"label":"系统设置","value":10,"type":1},{"label":"test","value":11,"type":0}]},"timestamp":1662600476063})
+})
+
+Mock.mock("/client/menu","post",(options)=>{
+    console.log("mock--/client/menu",options)
+    return Mock.mock({"code":201,"message":"操作成功","data":true,"timestamp":1662600046681})
+})
+
+Mock.mock("/client/menu","put",(options)=>{
+    console.log("mock--/client/menu",options)
+    return Mock.mock({"code":201,"message":"修改成功","data":true,"timestamp":1662599958448})
+})
+
+Mock.mock("/client/menu/*","delete",(options)=>{
+    console.log("mock--/client/menu/*",options)
+    return Mock.mock({"code":204,"message":"删除成功","data":true,"timestamp":1662600067495})
 })
 
 

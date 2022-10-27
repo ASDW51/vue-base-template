@@ -4,10 +4,12 @@ import router from "./router"
 import store from "./store"
 import permission from "./directive/permission"
 import {Plugin} from "vue-fragment"
+
 //验证汉化
 import "@/util/validate-zhCn"
 // css
 import "nprogress/nprogress.css"
+
 import { 
 	Button, 
 	Select,
@@ -39,9 +41,10 @@ import {
 	Message,
 	Notification
 } from "element-ui"
-
+import eIconPicker from 'e-icon-picker';
 //导入开启mock
 if(process.env.NODE_ENV == "mock"){
+	console.log("引入")
 	import("@/mock/mock")
 }
 
@@ -82,6 +85,9 @@ Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message
 Vue.config.productionTip = false
 Vue.directive("permission",permission)
+Vue.use(eIconPicker,{
+	zIndex:3100
+})
 // 挂载所有api到Vue.$request上
 // Vue.use(api)
 Vue.use(Plugin)

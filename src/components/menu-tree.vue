@@ -23,7 +23,7 @@ export default {
 	props:{
 		menuData:{
 			type:Array,
-			default:[]
+			default:()=>[]
 		}
 	}
 }

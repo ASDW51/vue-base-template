@@ -12,9 +12,17 @@ export default async (that)=>{
 				label:"备注"
 			},
 			{
-				key:"opration",
+				key:"createTime",
+				label:"创建时间"
+			},
+			{
+				key:"updateTime",
+				label:"修改时间"
+			},
+			{
+				key:"operation",
 				label:"操作",
-				slot:"opration",
+				slot:"operation",
 				removeBtn:{
 					show:true,
 					permission:"role:delete"
@@ -51,7 +59,7 @@ export default async (that)=>{
 		search:{
 
 		},
-		opration:{
+		operation:{
 			form:{},
 			options:[
 				{

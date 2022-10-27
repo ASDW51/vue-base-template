@@ -7,7 +7,7 @@
                 :prop="item.key"
                 :label="item.removeLabel?'':item.label"
                 >
-                <slot v-if="item.slot" :name="item.slot"></slot>
+                <slot v-if="item.slot" :name="item.slot" :data="form[item.key]"></slot>
                 <template v-else>
                     <component :is="item.type" v-model="form[item.key]" v-bind="item.props" v-on="item.listeners" :style="{width:item.width===false?'':(item.width || '200px')}">
                         

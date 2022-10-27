@@ -12,22 +12,6 @@
 		  style="border-right:none;"
 		  :default-active="defaultActive"
         >
-          	<!-- <el-menu-item index="/">
-				<i class="el-icon-message"></i>
-				<span slot="title">
-					导航一
-				</span>
-			</el-menu-item>
-		  <el-submenu index="2">
-			<template slot="title">
-				<i class="el-icon-message"></i>
-				<span slot="title">商品管理</span>
-			</template>
-			<el-menu-item index="about">添加</el-menu-item>
-			<el-menu-item index="b">商品列表</el-menu-item>
-			<el-menu-item index="c">商品列表</el-menu-item>
-			<el-menu-item index="d">商品列表</el-menu-item>
-		  </el-submenu> -->
 		  <menu-tree :menuData="menu"/>
         </el-menu>
 		
@@ -93,7 +77,7 @@ export default {
 		menuTree
 	},
 	methods: {
-		select(index){
+		select(){
 		
 		},
 		closeMenu(){

@@ -1,6 +1,7 @@
 import { roleList } from "@/apis/role"
 import store from "@/store"
-
+import bus from "@/util/bus"
+import fileUpload from "@/components/file-upload.vue"
 export default async (that)=>{
 	let roleOption = []    
 	roleOption = store.state.role.map(item=>({value:item.id,label:item.name}))
@@ -46,16 +47,16 @@ export default async (that)=>{
 				label:"上次登录",
 			},
 			{
-				key:"opration",
+				key:"operation",
 				label:"操作",
-				slot:"opration",
+				slot:"operation",
 				removeBtn:{
 					show:true,
-					permission:""
+					permission:"user:delete"
 				},
 				editBtn:{
 					show:true,
-					permission:""
+					permission:"user:edit"
 				},
 
 			}
@@ -132,7 +133,7 @@ export default async (that)=>{
 			direction:"h",
 			labelPosition:"right"
 		},
-		opration:{
+		operation:{
 			form:{},
 			options:[
 				{
@@ -199,12 +200,11 @@ export default async (that)=>{
 					},
 					{
 						label:"头像",
-						key:"avatar_url",
-						type:"el-upload",
-						
+						key:"avatarUrl",
+						type:fileUpload,
 						props:{
-							action:"/dhd",
-							class:"avatar-uploader"
+							actionType:"images/avatar",
+							imageField:"avatarUrl"
 						}
 					},
 					{
@@ -233,12 +233,11 @@ export default async (that)=>{
 					},
 					{
 						label:"头像",
-						key:"avatar_url",
-						type:"el-upload",
-						
+						key:"avatarUrl",
+						type:fileUpload,
 						props:{
-							action:"/dhd",
-							class:"avatar-uploader"
+							actionType:"images/avatar",
+							imageField:"avatarUrl"
 						}
 					},
 					{

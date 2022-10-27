@@ -9,7 +9,7 @@
 				{{formatRole(data.data.row.roleId)}}
 			</template>
 			<template v-slot:avatar="data">
-				<img :src="data.data.row.avatarUrl" alt="" style="width:30px;height:30px">
+				<img :src="data.data.row.avatarUrl | getFilePath" alt="" style="width:30px;height:30px">
 
 			</template>
         </page-table>
@@ -19,17 +19,19 @@
 import pageTable from "@/components/page-table.vue"
 import options from "./index"
 import {mapState} from "vuex"
+import {getFilePath} from "@/util/index"
 export default {
 	name:"user",
 	components:{
 		pageTable
 	},
+	filters:{getFilePath},
 	data(){
 		return {
 			columns:[],
 			reqOptions:{},
 			search:{},
-			opration:{},
+			operation:{},
 			options
 		}
 	},
@@ -53,7 +55,7 @@ export default {
 		//  columns:options.columns,
 		//     reqOptions:options.reqOptions,
 		//     search:options.search,
-		//     opration:options.opration
+		//     operation:options.operation
 	}
 }
 </script>

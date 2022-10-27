@@ -126,6 +126,7 @@ export default new Vuex.Store({
 				console.log("获取到菜单")
 				context.dispatch("addTreeMenu",res.data.menu)
 				context.dispatch("addRoleList",res.data.role)
+				context.dispatch("addPermission",res.data.permission)
 				let arr = []
 				dynamicRouter(res.data.menu,arr)
 				console.log(arr)

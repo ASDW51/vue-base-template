@@ -1,16 +1,15 @@
 import axios from "axios"
 import store from "../store/index"
-import Vue from "vue"
 import router from "@/router"
 import { error, success, warning } from "@/util/notice"
 const instance = axios.create({
-	baseURL:process.env.NODE_ENV=="production"?process.env.VUE_APP_REQUEST_URL:"https://abcde.loca.lt/client",
+	baseURL:process.env.VUE_APP_REQUEST_URL,
 	timeout:0,
 	headers:{
 		"Content-Type":"application/json"
 	}
 })
-const errCode = [200,201,203,204]
+// const errCode = [200,201,203,204]
 const alertMessageCode = [201,202,203,204,205,401,403,404,500,501]
 // 前置拦截器
 instance.interceptors.request.use(config=>{

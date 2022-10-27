@@ -38,7 +38,7 @@ page-table.func示例
     	remove, 删除
     }，
     search:json-form props,
-    opration:json-form props,
+    operation:json-form props,
     addField:json-form props,
     updateField:json-form props,
     

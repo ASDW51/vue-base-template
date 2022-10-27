@@ -14,11 +14,11 @@
         </div>
         <div>
             <json-form
-                :direction="opration.direction"
-                :form="opration.form"
-                ref="opration"
-                :options="opration.options">
-				<template :slot="item.slot" v-for="item in oprationSlots">
+                :direction="operation.direction"
+                :form="operation.form"
+                ref="operation"
+                :options="operation.options">
+				<template :slot="item.slot" v-for="item in operationSlots">
 					<slot :name="item.slot"></slot>
 				</template>
 			</json-form>
@@ -41,8 +41,8 @@
                     :align="item.align?item.align:'center'"
                     >
                     <template slot-scope="scope">
-                            <div v-if="item.slot=='opration'">
-								<slot name="moreOpration" :data="scope"></slot>
+                            <div v-if="item.slot=='operation'">
+								<slot name="moreoperation" :data="scope"></slot>
                                 <el-button type="primary" v-if="item?.editBtn?.show"  v-permission="item?.editBtn?.permission" size="small" @click="edit(scope.row)">编辑</el-button>
                                 <el-button type="danger" v-if="item?.removeBtn?.show" v-permission="item?.removeBtn?.permission" size="small" @click="delUser(scope.row)">删除</el-button>
 							</div>
@@ -77,8 +77,8 @@
                     :form="updateField.form"
                     ref="updateForm"
                     :options="updateField.options">
-					<template :slot="item.name" v-for="item in updateFiledSlots">
-						<slot :name="item.name"></slot>
+					<template :slot="item.slot" v-for="item in updateFiledSlots" slot-scope="scope">
+						<slot :name="item.slot" :data="scope.data"></slot>
 					</template>
                 </json-form>
                 <span slot="footer">
@@ -95,6 +95,7 @@
 <script>
 import request from "@/requests"
 import jsonForm from "./json-form.vue"
+import bus from '@/util/bus'
 export default {
 	name:"page-table",
 	props:{
@@ -120,7 +121,7 @@ export default {
 			columns:[],
 			reqOptions:{},
 			search:{},
-			opration:{},
+			operation:{},
 			tableData:[],
 			show:false,
 			updateField:{},
@@ -136,7 +137,7 @@ export default {
 		this.columns = options.columns || []
 		this.reqOptions = options.reqOptions || {}
 		this.search = options.search || {}
-		this.opration = options.opration || {}
+		this.operation = options.operation || {}
 		this.updateFieldMethod = options.updateField || (()=>{})
 		this.addFieldMethod = options.addField || options.updateField || (()=>{})
 		this.getList()
@@ -151,13 +152,17 @@ export default {
 			let list = this.reqOptions.list
 			if(!list){
 				throw new Error("未配置reqOptions.list")
-				return
 			}
 			console.log([list.method])
 			request[list.method](list.url,{params}).then(res=>{
 				this.tableData = res.data.list
 				this.pageTotal = res.data.total
 				list.callback && list.callback(this,res)
+				if(res.data.pages < this.pageNum){
+					this.pageNum = res.data.pages
+					this.getList()
+				}
+				
 			})
 		},
 		searchFun(...e){
@@ -223,7 +228,7 @@ export default {
 				confirmButtonText:"确定",
 				cancelButtonText:"取消",
 				type:"warning"
-			}).then(res=>{
+			}).then(()=>{
 				console.log(row.id)
 				let remove = this.reqOptions.remove
 				if(!remove){
@@ -256,8 +261,19 @@ export default {
 			// 计算el-table的最大高度
 			setTimeout(()=>{
 				console.log("debugger")
-				this.tableHeight = window.innerHeight - 80 - this.$refs.search.$el.clientHeight - this.$refs.opration.$el.clientHeight -42 -42
+				this.tableHeight = window.innerHeight - 80 - this.$refs.search.$el.clientHeight - this.$refs.operation.$el.clientHeight -42 -42
 			})
+		},
+		async updateData(form={}){
+			let tform = this.updateField.form
+			let formKeys = Object.keys(form)
+			if(formKeys.some(item=>tform[item]) || Object.keys(tform).length == 0 || this.mode == 'add'){
+				console.log("update",this.updateField,this.$parent)
+				this.updateField =await this.updateFieldMethod({...this.updateField.form,...form})
+			}else{
+				console.log("不更新")
+			}
+			
 		}
 	},
 
@@ -265,18 +281,20 @@ export default {
 		console.log(this.$refs.search)
 		this.resize()
 		window.addEventListener("resize",this.resize)
+		bus.$on("updateData",this.updateData)
 	},
 	beforeDestroy(){
 		window.removeEventListener("resize",this.resize)
+		bus.$off("updateData",this.updateData)
 	},
 	computed:{
 		// 计算search 插槽
 		searchSlots(){
 			return this.search?.options?.filter(item=>item.slot)
 		},
-		//opration 插槽
-		oprationSlots(){
-			return this.opration?.options?.filter(item=>item.slot)
+		//operation 插槽
+		operationSlots(){
+			return this.operation?.options?.filter(item=>item.slot)
 		},
 		updateFiledSlots(){
 			return this.updateField?.options?.filter(item=>item.slot)
