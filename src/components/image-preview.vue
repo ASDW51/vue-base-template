@@ -5,14 +5,14 @@
 </template>
 <script>
 export default {
-    name:"ImagePreview",
-    props:{
-        src:String,
-    },
-    computed:{
-        previewSrc(){
-            return process.env.VUE_APP_REQUEST_URL + this.src
-        }
-    }
+	name:"ImagePreview",
+	props:{
+		src:String,
+	},
+	computed:{
+		previewSrc(){
+			return process.env.VUE_APP_REQUEST_URL + this.src
+		}
+	}
 }
 </script>

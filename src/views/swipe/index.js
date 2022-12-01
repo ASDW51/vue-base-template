@@ -1,34 +1,34 @@
 import fileUpload from "@/components/file-upload.vue"
 export default async (that)=>{
-    return {
-        columns:[
-            {
-                key:"img",
-                slot:"img",
-                label:"轮播图"
-            },
-            {
-                key:"description",
-                label:"描述"
-            },
-            {
-                key:"weight",
-                label:"显示权重"
-            },
-            {
-                key:"actionUrl",
-                label:"指向链接"
-            },
-            {
-                key:"createTime",
-                label:"创建时间"
-            },
-            {
-                key:"updateTime",
-                label:"修改时间"
-            },
-            {
-                key:"operation",
+	return {
+		columns:[
+			{
+				key:"img",
+				slot:"img",
+				label:"轮播图"
+			},
+			{
+				key:"description",
+				label:"描述"
+			},
+			{
+				key:"weight",
+				label:"显示权重"
+			},
+			{
+				key:"actionUrl",
+				label:"指向链接"
+			},
+			{
+				key:"createTime",
+				label:"创建时间"
+			},
+			{
+				key:"updateTime",
+				label:"修改时间"
+			},
+			{
+				key:"operation",
 				label:"操作",
 				slot:"operation",
 				removeBtn:{
@@ -39,31 +39,31 @@ export default async (that)=>{
 					show:true,
 					permission:"swipe:edit"
 				},
-            }
-        ],
-        reqOptions:{
-            list:{
-                method:"get",
-                url:"/swipe"       
-            },
-            insert:{
-                method:"post",
-                url:"/swipe"
-            },
-            update:{
-                method:"put",
-                url:"/swipe"
-            },
-            remove:{
-                method:"delete",
-                url:"/swipe/${id}"
-            }
-        },
-        operation:{
-            form:{},
-            direction:"h",
-            options:[
-                {
+			}
+		],
+		reqOptions:{
+			list:{
+				method:"get",
+				url:"/swipe"       
+			},
+			insert:{
+				method:"post",
+				url:"/swipe"
+			},
+			update:{
+				method:"put",
+				url:"/swipe"
+			},
+			remove:{
+				method:"delete",
+				url:"/swipe/${id}"
+			}
+		},
+		operation:{
+			form:{},
+			direction:"h",
+			options:[
+				{
 					key:"btn1",
 					type:"el-button",
 					label:"添加轮播图",
@@ -80,41 +80,41 @@ export default async (that)=>{
 						}
 					}
 				}
-            ]
-        },
-        updateField:async (form={})=>{
-            return {
-                form,
-                direction:"h",
-                options:[
-                    {
-                        key:"img",
-                        label:"图片",
-                        type:fileUpload,
-                        props:{
-                            imageField:"img",
-                            actionType:"images/swipe"
-                        }
-                    },
-                    {
-                        key:"description",
-                        label:"描述",
-                        type:"el-input"
-                    },
-                    {
-                        key:"weight",
-                        label:"显示权重",
-                        type:"el-input"
-                    },
-                    {
-                        key:"actionUrl",
-                        label:"指向链接",
-                        type:"el-input"
-                    },
+			]
+		},
+		updateField:async (form={})=>{
+			return {
+				form,
+				direction:"h",
+				options:[
+					{
+						key:"img",
+						label:"图片",
+						type:fileUpload,
+						props:{
+							imageField:"img",
+							actionType:"images/swipe"
+						}
+					},
+					{
+						key:"description",
+						label:"描述",
+						type:"el-input"
+					},
+					{
+						key:"weight",
+						label:"显示权重",
+						type:"el-input"
+					},
+					{
+						key:"actionUrl",
+						label:"指向链接",
+						type:"el-input"
+					},
                     
-                ]
-            }
-        }
+				]
+			}
+		}
         
-    }
+	}
 }

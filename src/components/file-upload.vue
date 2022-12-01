@@ -17,47 +17,47 @@
 <script>
 import bus from "@/util/bus"
 export default {
-    props:{
-        actionType:{
-            type:String,
-            default:'images/avatar'
-        },
-        multiple:{
-            type:Boolean,
-            default:false,
-        },
-        fileType:{
-            type:String,
-            default:"image",
-        },
-        imageField:{
-            type:String,
-            default:'none'
-        }
-    },
-    data(){
-        let that = this
-        return {
-            headers:{
-                token:localStorage.getItem("token")
-            },
-            success: function(response,file) {
-                // 控制只有一个文件
-                if(!this.multiple){
-                    this.clearFiles()
-                    this.uploadFiles = [file]
-                }
-                console.log(bus)
+	props:{
+		actionType:{
+			type:String,
+			default:"images/avatar"
+		},
+		multiple:{
+			type:Boolean,
+			default:false,
+		},
+		fileType:{
+			type:String,
+			default:"image",
+		},
+		imageField:{
+			type:String,
+			default:"none"
+		}
+	},
+	data(){
+		let that = this
+		return {
+			headers:{
+				token:localStorage.getItem("token")
+			},
+			success: function(response,file) {
+				// 控制只有一个文件
+				if(!this.multiple){
+					this.clearFiles()
+					this.uploadFiles = [file]
+				}
+				console.log(bus)
 
-                bus.$emit("updateData",{[that.imageField]:response})
-            }
-        }
-    },
-    computed:{
-        action(){
-            return process.env.VUE_APP_UPLOAD_URL + '/' + this.fileType
-        }
-    }
+				bus.$emit("updateData",{[that.imageField]:response})
+			}
+		}
+	},
+	computed:{
+		action(){
+			return process.env.VUE_APP_UPLOAD_URL + "/" + this.fileType
+		}
+	}
 }
 </script>
 

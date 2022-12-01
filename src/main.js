@@ -41,7 +41,7 @@ import {
 	Message,
 	Notification
 } from "element-ui"
-import eIconPicker from 'e-icon-picker';
+import eIconPicker from "e-icon-picker"
 //导入开启mock
 if(process.env.NODE_ENV == "mock"){
 	console.log("引入")

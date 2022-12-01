@@ -31,31 +31,31 @@ export default {
 	data(){
 		return {
 			func,
-            icon:"",
-            options:{
-               FontAwesome: false,
-                ElementUI: true,
-                eIcon: false,//自带的图标，来自阿里妈妈
-                eIconSymbol: false,//是否开启彩色图标
-                addIconList: [],
-                removeIconList: [],
-                zIndex: 3100
-            }
+			icon:"",
+			options:{
+				FontAwesome: false,
+				ElementUI: true,
+				eIcon: false,//自带的图标，来自阿里妈妈
+				eIconSymbol: false,//是否开启彩色图标
+				addIconList: [],
+				removeIconList: [],
+				zIndex: 3100
+			}
 		}
 	},
-    methods:{
-        async changeIcon(e){
-            console.log(e)
-             let ptable = this.$refs.pageTable
-             console.log(ptable.updateField)
-            let updateField  =await ptable.updateFieldMethod({...ptable.updateField.form,icon:e})
-            ptable.updateField = updateField
-            console.log("icon变化",this.$refs.pageTable,updateField)
-        },
-    },
-    mounted(){
-        console.log(this.$refs)
-    },
+	methods:{
+		async changeIcon(e){
+			console.log(e)
+			let ptable = this.$refs.pageTable
+			console.log(ptable.updateField)
+			let updateField  =await ptable.updateFieldMethod({...ptable.updateField.form,icon:e})
+			ptable.updateField = updateField
+			console.log("icon变化",this.$refs.pageTable,updateField)
+		},
+	},
+	mounted(){
+		console.log(this.$refs)
+	},
 }
 </script>
 <style lang="css" scoped>

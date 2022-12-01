@@ -33,12 +33,12 @@ export default async (that)=>{
 				key:"type",
 				label:"菜单类型",
 				slot:"type",
-                width:80,
+				width:80,
 			},
 			{
 				key:"weight",
 				label:"排序权重",
-                width:100
+				width:100
 			},
 			{
 				key:"createTime",
@@ -48,17 +48,17 @@ export default async (that)=>{
 				key:"updateTime",
 				label:"修改时间"
 			},
-            {
-                key:"operation",
-                label:"操作",
-                slot:"operation",
-                removeBtn:{
-                    show:true,
-                },
-                editBtn:{
-                    show:true
-                }
-            }
+			{
+				key:"operation",
+				label:"操作",
+				slot:"operation",
+				removeBtn:{
+					show:true,
+				},
+				editBtn:{
+					show:true
+				}
+			}
 		],
 		reqOptions:{
 			list:{

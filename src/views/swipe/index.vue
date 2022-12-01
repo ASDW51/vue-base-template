@@ -14,15 +14,15 @@ import pageTable from "@/components/page-table.vue"
 import ImagePreview from "@/components/image-preview.vue"
 import func from "./index.js"
 export default {
-    name:"swipe",
-    components:{
-        pageTable,
-        ImagePreview
-    },
-    data(){
-        return {
-            func
-        }
-    }
+	name:"swipe",
+	components:{
+		pageTable,
+		ImagePreview
+	},
+	data(){
+		return {
+			func
+		}
+	}
 }
 </script>

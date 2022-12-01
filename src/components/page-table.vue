@@ -95,7 +95,7 @@
 <script>
 import request from "@/requests"
 import jsonForm from "./json-form.vue"
-import bus from '@/util/bus'
+import bus from "@/util/bus"
 export default {
 	name:"page-table",
 	props:{
@@ -267,7 +267,7 @@ export default {
 		async updateData(form={}){
 			let tform = this.updateField.form
 			let formKeys = Object.keys(form)
-			if(formKeys.some(item=>tform[item]) || Object.keys(tform).length == 0 || this.mode == 'add'){
+			if(formKeys.some(item=>tform[item]) || Object.keys(tform).length == 0 || this.mode == "add"){
 				console.log("update",this.updateField,this.$parent)
 				this.updateField =await this.updateFieldMethod({...this.updateField.form,...form})
 			}else{
