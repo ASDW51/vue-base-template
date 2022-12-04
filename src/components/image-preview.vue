@@ -4,6 +4,7 @@
     </div>
 </template>
 <script>
+import { uploadModeType } from '@/config/upload';
 export default {
 	name:"ImagePreview",
 	props:{
@@ -11,7 +12,12 @@ export default {
 	},
 	computed:{
 		previewSrc(){
-			return process.env.VUE_APP_REQUEST_URL + this.src
+			let base = this.src
+			for(let i in uploadModeType){
+				base = base.replace(uploadModeType[i].tag,uploadModeType[i].target)
+			}
+			console.log("base",base)
+			return base
 		}
 	}
 }

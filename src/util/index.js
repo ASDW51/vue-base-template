@@ -32,13 +32,10 @@ const loadView = (view)=>{
 	return  (resolve) => require([`@/views/${view}`], resolve)
 }
 
-const getFilePath = (src)=>{
-	return /^https?:\/\//.test(src)?src:process.env.VUE_APP_REQUEST_URL+src
-}
+
 export {
 	debounce,
 	throttle,
 	dynamicRouter,
-	loadView,
-	getFilePath
+	loadView
 }

@@ -1,9 +1,11 @@
 <template>
     <el-upload 
+		ref="upload"
         :action="action"
         :headers="headers"
         :multiple="multiple"
         :on-success="success"
+		:before-upload="beforeUpload"
         class="avatar-uploader"
         :data="{
             'type':actionType
@@ -16,6 +18,7 @@
 </template>
 <script>
 import bus from "@/util/bus"
+import {uploadMode,uploadModeType} from "@/config/upload"
 export default {
 	props:{
 		actionType:{
@@ -33,6 +36,10 @@ export default {
 		imageField:{
 			type:String,
 			default:"none"
+		},
+		saveMode:{
+			type:String,
+			default:uploadMode
 		}
 	},
 	data(){
@@ -41,6 +48,7 @@ export default {
 			headers:{
 				token:localStorage.getItem("token")
 			},
+			beforeUpload:null,
 			success: function(response,file) {
 				// 控制只有一个文件
 				if(!this.multiple){
@@ -51,6 +59,25 @@ export default {
 
 				bus.$emit("updateData",{[that.imageField]:response})
 			}
+		}
+	},
+	created(){
+		this.beforeUpload = (file)=>{
+			console.log("终止合约",file)
+			console.log(uploadModeType,uploadMode)
+			let currentMode = uploadModeType[this.saveMode]
+			currentMode.upload(this.action,file,{key:"type",value:this.actionType}).then(response=>{
+				console.log("sc",response)
+				// 控制只有一个文件
+				if(!this.multiple){
+					this.$refs.upload.clearFiles()
+					this.$refs.upload.uploadFiles = [file]
+				}
+				response = response.replace(currentMode.target,currentMode.tag)
+				console.log(response)
+				bus.$emit("updateData",{[this.imageField]:response})
+			})
+			return false
 		}
 	},
 	computed:{

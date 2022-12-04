@@ -19,7 +19,7 @@
 import pageTable from "@/components/page-table.vue"
 import options from "./index"
 import {mapState} from "vuex"
-import {getFilePath} from "@/util/index"
+import {getFilePath} from "@/filters/index"
 export default {
 	name:"user",
 	components:{
