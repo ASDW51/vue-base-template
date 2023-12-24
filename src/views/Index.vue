@@ -1,0 +1,36 @@
+<template>
+  <div class="hello">
+    <KeepAlive>
+		<router-view v-if="$route.meta.keep"></router-view>
+	</KeepAlive>
+	<router-view v-if="!$route.meta.keep"></router-view>
+  </div>
+</template>
+
+<script>
+import {debounce} from "@/util/index"
+import {throttle} from "@/util/index"
+debounce
+import "@/apis/index"
+export default {
+	name: "Index",
+	methods:{
+	@throttle
+		request(){
+			this.$request.index.getIndex().then(res=>{
+				console.log(res)
+			})
+			this.$request.swipe.getSwipe().then(res=>{
+				console.log(res)
+			})
+		}
+	}
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="less">
+.hello{
+	height: 100%;
+}
+</style>
